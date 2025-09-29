@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbonfootprint</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, green 0%, green 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 0;
+    }
+    .container {
+      max-width: 900px;
+      width: 100%;
+      padding: 24px;
+      margin: auto;
+    }
+    .title {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .title h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      margin-bottom: 8px;
+    }
+    .title p {
+      color: #fff;
+      font-size: 1.1rem;
+    }
+    .calculator-card {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .glass-effect {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 0;
+      backdrop-filter: blur(10px);
+    }
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+    .input-field::placeholder {
+      color: #fff;
+      opacity: 0.7;
+    }
+    label {
+      color: #fff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .button-row {
+      text-align: center;
+      margin-top: 32px;
+    }
+    .btn {
+      font-weight: bold;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 32px;
+      margin: 0 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: box-shadow 0.2s;
+      display: inline-block;
+    }
+    .btn-calc {
+      background: #fff;
+      color: #228B22;
+    }
+    .btn-save {
+      background: #FFD700;
+      color: #222;
+    }
+    .btn-history {
+      background: #3498db;
+      color: #fff;
+    }
+    .btn:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+    .result-card {
+      background: rgba(255,255,255,0.15);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      padding: 32px;
+      margin-top: 32px;
+    }
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .result-box {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .result-title {
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .result-value-yellow {
+      color: #FFD700;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .result-value-green {
+      color: #90ee90;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .result-label {
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .tips, .history {
+      margin-top: 24px;
+      color: #fff;
+    }
+    .tips ul, .history ul {
+      padding-left: 20px;
+    }
+    .tips li, .history li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">
+      <h1>Carbonfootprint Calculator</h1>
+      <p>Calculate your monthly carbon footprint</p>
+    </div>
+
+    
+    <div class="calculator-card">
+      <div class="grid">
+      
+        <div class="glass-effect">
+          <h3 style="color:#fff;font-size:1.1rem;font-weight:600;margin-bottom:12px;">Transportation</h3>
+          <label>Miles driven monthly</label>
+          <input type="number" id="miles" class="input-field" placeholder="Enter miles">
+          <label style="margin-top:12px;">Fuel efficiency (MPG)</label>
+          <input type="number" id="mpg" class="input-field" placeholder="Enter MPG" value="25">
+        </div>
+
+        
+        <div class="glass-effect">
+          <h3 style="color:#fff;font-size:1.1rem;font-weight:600;margin-bottom:12px;">Energy Use</h3>
+          <label>Electricity usage (kWh/month)</label>
+          <input type="number" id="electricity" class="input-field" placeholder="Enter kWh">
+          <label style="margin-top:12px;">Gas usage (therm/month)</label>
+          <input type="number" id="gas" class="input-field" placeholder="Enter therm">
+        </div>
+      </div>
+      <div class="glass-effect" style="margin:24px auto 0 auto; max-width:400px;">
+        <h3 style="color:#fff;font-size:1.1rem;font-weight:600;margin-bottom:12px;">Diet</h3>
+        <label>Weekly meat consumption (kg)</label>
+        <input type="number" id="meat" class="input-field" placeholder="Enter kg">
+        <label style="margin-top:12px;">Weekly dairy (kg)</label>
+        <input type="number" id="dairy" class="input-field" placeholder="Enter kg">
+      </div>
+      <div class="button-row">
+        <button id="calculateBtn" type="button" class="btn btn-calc">
+          Calculate Footprint <i class="fas fa-leaf"></i>
+        </button>
+        <button id="saveBtn" type="button" class="btn btn-save">
+          Save Result <i class="fas fa-save"></i>
+        </button>
+        <button id="historyBtn" type="button" class="btn btn-history">
+          History <i class="fas fa-clock"></i>
+        </button>
+      </div>
+    </div>
+
+  
+    <div id="resultSection" class="result-card" style="display:none;">
+      <h2 style="color:#fff;font-size:1.5rem;font-weight:bold;text-align:center;margin-bottom:24px;">Your Carbon Footprint</h2>
+      <div class="result-grid">
+        <div class="result-box">
+          <div class="result-title">Total CO2</div>
+          <div id="totalCO2" class="result-value-yellow">0</div>
+          <div class="result-label">kg of CO2/month</div>
+        </div>
+        <div class="result-box">
+          <div class="result-title">Tree Equivalent</div>
+          <div id="trees" class="result-value-green">0</div>
+          <div class="result-label">trees to offset</div>
+        </div>
+        <div class="result-box">
+          <div class="result-title">Suggestions</div>
+          <button id="viewTips" type="button" class="btn btn-calc" style="background:#228B22;color:#fff;">View Tips</button>
+        </div>
+      </div>
+      <div id="tips" class="tips" style="display:none;"></div>
+    </div>
+  </div>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('calculateBtn').addEventListener('click', calculateFootprint);
+    document.getElementById('viewTips').addEventListener('click', () => {
+      const tipsDiv = document.getElementById('tips');
+      tipsDiv.style.display = tipsDiv.style.display === "none" ? "block" : "none";
+    });
+    document.getElementById('saveBtn').addEventListener('click', saveResult);
+    document.getElementById('historyBtn').addEventListener('click', showHistory);
+  });
+
+  function calculateFootprint() {
+    const miles = parseFloat(document.getElementById('miles').value) || 0;
+    const mpg = parseFloat(document.getElementById('mpg').value) || 25;
+    const electricity = parseFloat(document.getElementById('electricity').value) || 0;
+    const gas = parseFloat(document.getElementById('gas').value) || 0;
+    const meat = parseFloat(document.getElementById('meat').value) || 0;
+    const dairy = parseFloat(document.getElementById('dairy').value) || 0;
+
+    if (miles < 0 || mpg <= 0 || electricity < 0 || gas < 0 || meat < 0 || dairy < 0) {
+      alert("⚠️ Please enter valid input (no negative numbers)");
+      return;
+    }
+
+    const transportCO2 = (miles / mpg) * 19.4 * 0.907;
+    const energyCO2 = ((electricity * 0.92) + (gas * 5.3)) * 0.907;
+    const dietCO2 = (meat * 60) + (dairy * 15);
+
+    const totalCO2 = (transportCO2 + energyCO2 + dietCO2).toFixed(2);
+    const treesToOffset = Math.ceil(totalCO2 / 20);
+
+    document.getElementById('totalCO2').textContent = totalCO2;
+    document.getElementById('trees').textContent = treesToOffset;
+    document.getElementById('resultSection').style.display = "block";
+
+    const saveBtn = document.getElementById('saveBtn');
+    if (saveBtn) {
+      saveBtn.dataset.co2 = totalCO2;
+      saveBtn.dataset.trees = treesToOffset;
+    }
+
+    
+    const lowTips = ["Great job! Try reducing single-use plastics.", "Consider biking short trips.", "Share eco-friendly habits with friends."];
+    const mediumTips = ["Switch to LED bulbs.", "Carpool or use public transport.", "Eat more plant-based meals."];
+    const highTips = ["Switch to renewable energy.", "Upgrade to energy-efficient appliances.", "Cut down frequent car use."];
+
+    let tipsList = totalCO2 < 500 ? lowTips : totalCO2 < 1500 ? mediumTips : highTips;
+    const selectedTips = [];
+    while (selectedTips.length < 2) {
+      const randomTip = tipsList[Math.floor(Math.random() * tipsList.length)];
+      if (!selectedTips.includes(randomTip)) selectedTips.push(randomTip);
+    }
+    document.getElementById('tips').innerHTML = "<ul>" + selectedTips.map(t => `<li>• ${t}</li>`).join("") + "</ul>";
+  }
+
+  function saveResult() {
+    const saveBtn = document.getElementById('saveBtn');
+    if (!saveBtn) return;
+
+    const totalCO2 = saveBtn.dataset.co2;
+    const trees = saveBtn.dataset.trees;
+
+    if (!totalCO2 || !trees) {
+      alert("⚠️ Please calculate first before saving!");
+      return;
+    }
+
+    fetch("http://localhost:5500/save-footprint", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ totalCO2, trees })
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert("✅ Result saved successfully!");
+    })
+    .catch(err => {
+      console.error("Error saving result:", err);
+      alert("❌ Error saving result!");
+    });
+  }
+
+  function showHistory() {
+    fetch("http://localhost:5500/api/history")
+      .then(res => res.json())
+      .then(history => {
+        if (history.length === 0) {
+          alert("No saved history yet!");
+          return;
+        }
+        let win = window.open("", "_blank");
+        win.document.write("<h2>Carbon Footprint History</h2><ul>");
+        history.forEach(h => {
+          win.document.write(`<li><b>${h.date}</b>: ${h.co2} kg CO2, ${h.trees} trees</li>`);
+        });
+        win.document.write("</ul>");
+      })
+      .catch(err => {
+        console.error("Error fetching history:", err);
+        alert("Error loading history!");
+      });
+  }
+</script>
+
+</body>
+</html>
