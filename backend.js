@@ -9,15 +9,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 const dataFile = path.join(__dirname, 'data.json');
 
 app.post('/save-footprint', (req, res) => {
-  const { totalCO2, trees } = req.body;
-  if (!totalCO2 || !trees) return res.status(400).json({ message: 'Missing data' });
+  const { co2, trees } = req.body;  // same na ng front-end hehe
+  if (!co2 || !trees) return res.status(400).json({ message: 'Missing data' });
 
   const history = fs.existsSync(dataFile)
     ? JSON.parse(fs.readFileSync(dataFile, 'utf-8'))
     : [];
 
   history.push({
-    co2: totalCO2,
+    co2,
     trees,
     date: new Date().toLocaleString(),
   });
@@ -25,6 +25,7 @@ app.post('/save-footprint', (req, res) => {
   fs.writeFileSync(dataFile, JSON.stringify(history, null, 2));
   res.json({ message: 'Saved successfully' });
 });
+
 
 app.get('/api/history', (req, res) => {
   const history = fs.existsSync(dataFile)
